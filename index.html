@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱心捐赠证书</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            display: none;
+        }
+
+        .input-section.active {
+            display: block;
+        }
+
+        .input-section h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .input-section p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 600;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .certificate-section {
+            display: none;
+        }
+
+        .certificate-section.active {
+            display: block;
+        }
+
+        .certificate {
+            background: white;
+            border: 3px solid #d4af37;
+            border-radius: 15px;
+            padding: 50px 40px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .certificate::before,
+        .certificate::after {
+            content: '';
+            position: absolute;
+            border: 2px solid #d4af37;
+        }
+
+        .certificate::before {
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+        }
+
+        .certificate::after {
+            top: 20px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+        }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .certificate-title {
+            font-size: 42px;
+            color: #d4af37;
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+        }
+
+        .certificate-subtitle {
+            font-size: 16px;
+            color: #999;
+            letter-spacing: 5px;
+        }
+
+        .certificate-body {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .donate-text {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .donor-name {
+            font-size: 48px;
+            color: #667eea;
+            font-family: 'Ma Shan Zheng', cursive;
+            margin: 20px 0;
+            padding: 10px 30px;
+            border-bottom: 3px solid #d4af37;
+            display: inline-block;
+        }
+
+        .donate-info {
+            font-size: 20px;
+            color: #333;
+            margin: 25px 0;
+        }
+
+        .donate-amount {
+            font-size: 36px;
+            color: #d4af37;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .donate-cause {
+            font-size: 16px;
+            color: #666;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        .certificate-footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px dashed #d4af37;
+        }
+
+        .certificate-date {
+            font-size: 16px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .org-name {
+            font-size: 18px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .seal {
+            position: absolute;
+            bottom: 80px;
+            right: 50px;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: 700;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 600;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-share {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif SC', serif;
+            font-weight: 600;
+        }
+
+        .btn-share:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .decorative-corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #d4af37;
+        }
+
+        .corner-tl {
+            top: 30px;
+            left: 30px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-tr {
+            top: 30px;
+            right: 30px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-bl {
+            bottom: 30px;
+            left: 30px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-br {
+            bottom: 30px;
+            right: 30px;
+            border-left: none;
+            border-top: none;
+        }
+
+        @media (max-width: 600px) {
+            .certificate {
+                padding: 30px 20px;
+            }
+
+            .certificate-title {
+                font-size: 32px;
+                letter-spacing: 5px;
+            }
+
+            .donor-name {
+                font-size: 36px;
+            }
+
+            .donate-amount {
+                font-size: 28px;
+            }
+
+            .seal {
+                width: 70px;
+                height: 70px;
+                font-size: 11px;
+                bottom: 60px;
+                right: 30px;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .btn-group button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="input-section active" id="inputSection">
+            <h1>🎁 感谢您的爱心</h1>
+            <p>感谢您购买礼盒，我们已代您捐赠 20 元</p>
+            <div class="input-group">
+                <input type="text" id="donorName" placeholder="请输入您的姓名" maxlength="20">
+            </div>
+            <button class="btn-generate" onclick="generateCertificate()">生成证书</button>
+        </div>
+
+        <div class="certificate-section" id="certificateSection">
+            <div class="certificate" id="certificate">
+                <div class="decorative-corner corner-tl"></div>
+                <div class="decorative-corner corner-tr"></div>
+                <div class="decorative-corner corner-bl"></div>
+                <div class="decorative-corner corner-br"></div>
+                
+                <div class="certificate-header">
+                    <div class="certificate-title">捐赠证书</div>
+                    <div class="certificate-subtitle">DONATION CERTIFICATE</div>
+                </div>
+
+                <div class="certificate-body">
+                    <div class="donate-text">致</div>
+                    <div class="donor-name" id="displayName"></div>
+                    <div class="donate-info">
+                        感谢您对公益事业的热心支持<br>
+                        特颁此证，铭记您的慷慨之心
+                    </div>
+                    <div class="donate-amount">¥ 20.00</div>
+                    <div class="donate-cause">
+                        您的每一份爱心都将化为温暖的力量<br>
+                        让世界因您的善举而更加美好
+                    </div>
+                </div>
+
+                <div class="certificate-footer">
+                    <div class="certificate-date" id="certificateDate"></div>
+                    <div class="org-name">爱心礼盒公益项目</div>
+                </div>
+
+                <div class="seal">
+                    爱心<br>公益
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-download" onclick="downloadCertificate()">📥 下载证书</button>
+                <button class="btn-share" onclick="shareCertificate()">📤 分享证书</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        window.onload = function() {
+            const savedName = sessionStorage.getItem('donorName');
+            const savedDate = sessionStorage.getItem('certificateDate');
+            
+            if (savedName && savedDate) {
+                document.getElementById('displayName').textContent = savedName;
+                document.getElementById('certificateDate').textContent = savedDate;
+                document.getElementById('inputSection').classList.remove('active');
+                document.getElementById('certificateSection').classList.add('active');
+            }
+        };
+
+        function generateCertificate() {
+            const nameInput = document.getElementById('donorName');
+            const name = nameInput.value.trim();
+
+            if (!name) {
+                alert('请输入您的姓名');
+                nameInput.focus();
+                return;
+            }
+
+            if (name.length < 2) {
+                alert('姓名至少需要2个字符');
+                nameInput.focus();
+                return;
+            }
+
+            currentName = name;
+            currentDate = formatDate(new Date());
+
+            sessionStorage.setItem('donorName', name);
+            sessionStorage.setItem('certificateDate', currentDate);
+
+            document.getElementById('displayName').textContent = name;
+            document.getElementById('certificateDate').textContent = currentDate;
+
+            document.getElementById('inputSection').classList.remove('active');
+            document.getElementById('certificateSection').classList.add('active');
+        }
+
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}年${month}月${day}日`;
+        }
+
+        function downloadCertificate() {
+            const certificate = document.getElementById('certificate');
+            
+            html2canvas(certificate, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `捐赠证书_${currentName}_${currentDate}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(error => {
+                console.error('下载失败:', error);
+                alert('下载失败，请重试');
+            });
+        }
+
+        function shareCertificate() {
+            const certificate = document.getElementById('certificate');
+            
+            html2canvas(certificate, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    if (navigator.share) {
+                        const file = new File([blob], `捐赠证书_${currentName}.png`, {
+                            type: 'image/png'
+                        });
+                        
+                        navigator.share({
+                            title: '我的捐赠证书',
+                            text: `感谢${currentName}对公益事业的支持！`,
+                            files: [file]
+                        }).catch(error => {
+                            console.error('分享失败:', error);
+                            alert('分享失败，请重试');
+                        });
+                    } else {
+                        alert('您的浏览器不支持分享功能，请使用下载按钮保存证书');
+                    }
+                });
+            }).catch(error => {
+                console.error('分享失败:', error);
+                alert('分享失败，请重试');
+            });
+        }
+
+        document.getElementById('donorName').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateCertificate();
+            }
+        });
+    </script>
+</body>
+</html>
