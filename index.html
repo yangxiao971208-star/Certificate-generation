@@ -397,11 +397,16 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
+        let currentName = '';
+        let currentDate = '';
+        
         window.onload = function() {
             const savedName = sessionStorage.getItem('donorName');
             const savedDate = sessionStorage.getItem('certificateDate');
             
             if (savedName && savedDate) {
+                currentName = savedName;
+                currentDate = savedDate;
                 document.getElementById('displayName').textContent = savedName;
                 document.getElementById('certificateDate').textContent = savedDate;
                 document.getElementById('inputSection').classList.remove('active');
