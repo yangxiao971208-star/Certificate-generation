@@ -401,8 +401,8 @@
         let currentDate = '';
         
         window.onload = function() {
-            const savedName = sessionStorage.getItem('donorName');
-            const savedDate = sessionStorage.getItem('certificateDate');
+            const savedName = localStorage.getItem('donorName');
+            const savedDate = localStorage.getItem('certificateDate');
             
             if (savedName && savedDate) {
                 currentName = savedName;
@@ -433,8 +433,8 @@
             currentName = name;
             currentDate = formatDate(new Date());
 
-            sessionStorage.setItem('donorName', name);
-            sessionStorage.setItem('certificateDate', currentDate);
+            localStorage.setItem('donorName', name);
+            localStorage.setItem('certificateDate', currentDate);
 
             document.getElementById('displayName').textContent = name;
             document.getElementById('certificateDate').textContent = currentDate;
