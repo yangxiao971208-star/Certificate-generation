@@ -100,6 +100,11 @@
             display: block;
         }
 
+        .image-section {
+            display: none;
+            text-align: center;
+        }
+
         .letter {
             background: linear-gradient(to bottom, #FFFDE7 0%, #FFF9C4 100%);
             border-radius: 15px;
@@ -316,7 +321,7 @@
             <button class="btn-generate" onclick="generateLetter()">查看感谢信</button>
         </div>
 
-        <div class="letter-section" id="letterSection">
+        <div class="letter-section" id="letterSection" style="display: none;">
             <div class="letter" id="letter">
                 <div class="letter-content">
                     <div class="certificate-title-en">CERTIFICATE</div>
@@ -341,9 +346,12 @@
                     </div>
                 </div>
             </div>
-
-            <div class="btn-group">
-                <button class="btn-download" onclick="downloadLetter()">📥 保存感谢信</button>
+        </div>
+        
+        <div class="image-section" id="imageSection">
+            <img id="letterImage" style="width: 100%; border-radius: 15px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn-download" onclick="downloadLetterFromImage()">📥 保存感谢信</button>
                 <button class="btn-share" onclick="shareLetter()">📤 分享爱心</button>
             </div>
         </div>
@@ -353,18 +361,20 @@
     <script>
         let currentName = '';
         let currentDate = '';
+        let currentImgData = '';
 
         window.onload = function() {
             const savedName = localStorage.getItem('donorName');
             const savedDate = localStorage.getItem('letterDate');
+            const savedImgData = localStorage.getItem('letterImgData');
 
-            if (savedName && savedDate) {
+            if (savedName && savedDate && savedImgData) {
                 currentName = savedName;
                 currentDate = savedDate;
-                document.getElementById('displayName').textContent = savedName;
-                document.getElementById('letterDate').textContent = savedDate;
+                currentImgData = savedImgData;
+                document.getElementById('letterImage').src = savedImgData;
                 document.getElementById('inputSection').classList.remove('active');
-                document.getElementById('letterSection').classList.add('active');
+                document.getElementById('imageSection').style.display = 'block';
             }
         };
 
@@ -387,14 +397,45 @@
             currentName = name;
             currentDate = formatDate(new Date());
 
-            localStorage.setItem('donorName', name);
-            localStorage.setItem('letterDate', currentDate);
-
             document.getElementById('displayName').textContent = name;
             document.getElementById('letterDate').textContent = currentDate;
 
-            document.getElementById('inputSection').classList.remove('active');
-            document.getElementById('letterSection').classList.add('active');
+            const letter = document.getElementById('letter');
+            letter.style.display = 'block';
+
+            html2canvas(letter, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#FFFDE7',
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                currentImgData = imgData;
+
+                localStorage.setItem('donorName', name);
+                localStorage.setItem('letterDate', currentDate);
+                localStorage.setItem('letterImgData', imgData);
+
+                document.getElementById('letterImage').src = imgData;
+                document.getElementById('inputSection').classList.remove('active');
+                document.getElementById('imageSection').style.display = 'block';
+                letter.style.display = 'none';
+            }).catch(error => {
+                console.error('生成图片失败:', error);
+                alert('生成图片失败，请重试');
+                letter.style.display = 'none';
+            });
+        }
+
+        function downloadLetterFromImage() {
+            if (isWeChat()) {
+                showSaveImageModal(currentImgData);
+            } else {
+                const link = document.createElement('a');
+                link.download = `感谢信_${currentName}_${currentDate}.png`;
+                link.href = currentImgData;
+                link.click();
+            }
         }
 
         function formatDate(date) {
@@ -435,20 +476,12 @@
         }
 
         function shareLetter() {
-            const letter = document.getElementById('letter');
-
-            html2canvas(letter, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#FFFDE7',
-                logging: false
-            }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-
-                if (isWeChat()) {
-                    showSaveImageModal(imgData, true);
-                } else if (navigator.share) {
-                    canvas.toBlob(blob => {
+            if (isWeChat()) {
+                showSaveImageModal(currentImgData, true);
+            } else if (navigator.share) {
+                fetch(currentImgData)
+                    .then(res => res.blob())
+                    .then(blob => {
                         const file = new File([blob], `感谢信_${currentName}.png`, {
                             type: 'image/png'
                         });
@@ -462,13 +495,9 @@
                             alert('分享失败，请重试');
                         });
                     });
-                } else {
-                    showSaveImageModal(imgData);
-                }
-            }).catch(error => {
-                console.error('分享失败:', error);
-                alert('分享失败，请重试');
-            });
+            } else {
+                showSaveImageModal(currentImgData);
+            }
         }
 
         function showSaveImageModal(imgData, isShare = false) {
