@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>爱心捐赠证书</title>
+    <title>感谢信 - aigo 绿色充电站</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Noto Serif SC', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 50%, #1B5E20 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -24,7 +24,7 @@
 
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 550px;
         }
 
         .input-section {
@@ -41,7 +41,7 @@
         }
 
         .input-section h1 {
-            color: #667eea;
+            color: #2E7D32;
             font-size: 28px;
             margin-bottom: 10px;
             font-family: 'Ma Shan Zheng', cursive;
@@ -69,12 +69,12 @@
         }
 
         .input-group input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
         }
 
         .btn-generate {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
             color: white;
             border: none;
             padding: 15px 50px;
@@ -88,142 +88,106 @@
 
         .btn-generate:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
         }
 
-        .certificate-section {
+        .letter-section {
             display: none;
         }
 
-        .certificate-section.active {
+        .letter-section.active {
             display: block;
         }
 
-        .certificate {
-            background: white;
-            border: 3px solid #d4af37;
+        .letter {
+            background: linear-gradient(to bottom, #FFFDE7 0%, #FFF9C4 100%);
             border-radius: 15px;
             padding: 50px 40px;
             position: relative;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
-        .certificate::before,
-        .certificate::after {
+        .letter::before {
             content: '';
             position: absolute;
-            border: 2px solid #d4af37;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 31px,
+                    #E0E0E0 31px,
+                    #E0E0E0 32px
+                );
+            pointer-events: none;
+            opacity: 0.3;
         }
 
-        .certificate::before {
-            top: 10px;
-            bottom: 10px;
-            left: 10px;
-            right: 10px;
+        .letter-content {
+            position: relative;
+            z-index: 1;
         }
 
-        .certificate::after {
-            top: 20px;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-        }
-
-        .certificate-header {
+        .letter-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
-        .certificate-title {
-            font-size: 42px;
-            color: #d4af37;
-            font-family: 'Ma Shan Zheng', cursive;
-            letter-spacing: 10px;
-            margin-bottom: 10px;
-        }
-
-        .certificate-subtitle {
-            font-size: 16px;
-            color: #999;
-            letter-spacing: 5px;
-        }
-
-        .certificate-body {
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .donate-text {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .donor-name {
-            font-size: 48px;
-            color: #667eea;
-            font-family: 'Ma Shan Zheng', cursive;
-            margin: 20px 0;
-            padding: 10px 30px;
-            border-bottom: 3px solid #d4af37;
-            display: inline-block;
-        }
-
-        .donate-info {
-            font-size: 20px;
-            color: #333;
-            margin: 25px 0;
-        }
-
-        .donate-amount {
+        .letter-title {
             font-size: 36px;
-            color: #d4af37;
-            font-weight: 700;
-            margin: 15px 0;
+            color: #2E7D32;
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 8px;
         }
 
-        .donate-cause {
-            font-size: 16px;
-            color: #666;
-            margin-top: 20px;
-            line-height: 1.8;
+        .letter-body {
+            font-size: 17px;
+            line-height: 2.2;
+            color: #333;
         }
 
-        .certificate-footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px dashed #d4af37;
-        }
-
-        .certificate-date {
-            font-size: 16px;
-            color: #999;
-            margin-bottom: 15px;
-        }
-
-        .org-name {
-            font-size: 18px;
-            color: #667eea;
+        .greeting {
+            font-size: 20px;
+            margin-bottom: 25px;
             font-weight: 600;
         }
 
-        .seal {
-            position: absolute;
-            bottom: 80px;
-            right: 50px;
-            width: 100px;
-            height: 100px;
-            border: 3px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #d4af37;
-            font-size: 14px;
+        .user-name {
+            color: #2E7D32;
+            font-size: 24px;
             font-weight: 700;
-            transform: rotate(-15deg);
-            opacity: 0.8;
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        .highlight {
+            color: #E65100;
+            font-weight: 600;
+        }
+
+        .donation-amount {
+            color: #D32F2F;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .letter-footer {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .brand-name {
+            color: #2E7D32;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .letter-date {
+            font-size: 16px;
+            color: #666;
         }
 
         .btn-group {
@@ -235,7 +199,7 @@
         }
 
         .btn-download {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -249,13 +213,13 @@
 
         .btn-download:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.4);
         }
 
         .btn-share {
             background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
+            color: #2E7D32;
+            border: 2px solid #4CAF50;
             padding: 12px 30px;
             font-size: 16px;
             border-radius: 25px;
@@ -266,69 +230,23 @@
         }
 
         .btn-share:hover {
-            background: #667eea;
+            background: #4CAF50;
             color: white;
         }
 
-        .decorative-corner {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 2px solid #d4af37;
-        }
-
-        .corner-tl {
-            top: 30px;
-            left: 30px;
-            border-right: none;
-            border-bottom: none;
-        }
-
-        .corner-tr {
-            top: 30px;
-            right: 30px;
-            border-left: none;
-            border-bottom: none;
-        }
-
-        .corner-bl {
-            bottom: 30px;
-            left: 30px;
-            border-right: none;
-            border-top: none;
-        }
-
-        .corner-br {
-            bottom: 30px;
-            right: 30px;
-            border-left: none;
-            border-top: none;
-        }
-
-        @media (max-width: 600px) {
-            .certificate {
-                padding: 30px 20px;
+        @media (max-width: 550px) {
+            .letter {
+                padding: 35px 25px;
             }
 
-            .certificate-title {
-                font-size: 32px;
+            .letter-title {
+                font-size: 28px;
                 letter-spacing: 5px;
             }
 
-            .donor-name {
-                font-size: 36px;
-            }
-
-            .donate-amount {
-                font-size: 28px;
-            }
-
-            .seal {
-                width: 70px;
-                height: 70px;
-                font-size: 11px;
-                bottom: 60px;
-                right: 30px;
+            .letter-body {
+                font-size: 15px;
+                line-height: 2;
             }
 
             .btn-group {
@@ -344,53 +262,55 @@
 <body>
     <div class="container">
         <div class="input-section active" id="inputSection">
-            <h1>🎁 感谢您的爱心</h1>
-            <p>感谢您购买礼盒，我们已代您捐赠 6 元公益午餐</p>
+            <h1>💚 感谢您的爱心</h1>
+            <p>感谢您选择 aigo 绿色充电站礼盒</p>
             <div class="input-group">
-                <input type="text" id="donorName" placeholder="请输入您的姓名" maxlength="20">
+                <input type="text" id="donorName" placeholder="请输入您的昵称" maxlength="20">
             </div>
-            <button class="btn-generate" onclick="generateCertificate()">生成证书</button>
+            <button class="btn-generate" onclick="generateLetter()">查看感谢信</button>
         </div>
 
-        <div class="certificate-section" id="certificateSection">
-            <div class="certificate" id="certificate">
-                <div class="decorative-corner corner-tl"></div>
-                <div class="decorative-corner corner-tr"></div>
-                <div class="decorative-corner corner-bl"></div>
-                <div class="decorative-corner corner-br"></div>
-                
-                <div class="certificate-header">
-                    <div class="certificate-title">捐赠证书</div>
-                    <div class="certificate-subtitle">DONATION CERTIFICATE</div>
-                </div>
-
-                <div class="certificate-body">
-                    <div class="donate-text">致</div>
-                    <div class="donor-name" id="displayName"></div>
-                    <div class="donate-info">
-                        感谢您对乡村儿童公益午餐的支持<br>
-                        特颁此证，铭记您的慷慨之心
+        <div class="letter-section" id="letterSection">
+            <div class="letter" id="letter">
+                <div class="letter-content">
+                    <div class="letter-header">
+                        <div class="letter-title">感谢信</div>
                     </div>
-                    <div class="donate-amount">¥ 6.00</div>
-                    <div class="donate-cause">
-                        您捐赠了一份公益午餐<br>
-                        让乡村儿童吃上热腾腾的营养餐
+
+                    <div class="letter-body">
+                        <div class="greeting">
+                            嗨 <span class="user-name" id="displayName"></span>：
+                        </div>
+
+                        <p>今天，有个小朋友因为您，多吃了一顿饭。</p>
+
+                        <p>
+                            您选择 <span class="highlight">aigo 绿色充电站礼盒</span>的这份善意，
+                            让我们共同向 <span class="highlight">中国社会福利基金会</span><br>
+                            免费午餐基金捐赠了 <span class="donation-amount">¥6</span>。
+                        </p>
+
+                        <p>
+                            不多，但足够让一个孩子<br>
+                            中午不再饿着肚子上课。
+                        </p>
+
+                        <p>
+                            感谢您和 <span class="highlight">aigo</span> 一起，<br>
+                            为绿色生活充电，也为孩子们的午餐充电。
+                        </p>
                     </div>
-                </div>
 
-                <div class="certificate-footer">
-                    <div class="certificate-date" id="certificateDate"></div>
-                    <div class="org-name">公益午餐爱心项目</div>
-                </div>
-
-                <div class="seal">
-                    爱心<br>公益
+                    <div class="letter-footer">
+                        <div class="brand-name">aigo 绿色充电站</div>
+                        <div class="letter-date" id="letterDate"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="btn-group">
-                <button class="btn-download" onclick="downloadCertificate()">📥 下载证书</button>
-                <button class="btn-share" onclick="shareCertificate()">📤 分享证书</button>
+                <button class="btn-download" onclick="downloadLetter()">📥 保存感谢信</button>
+                <button class="btn-share" onclick="shareLetter()">📤 分享爱心</button>
             </div>
         </div>
     </div>
@@ -399,33 +319,33 @@
     <script>
         let currentName = '';
         let currentDate = '';
-        
+
         window.onload = function() {
             const savedName = localStorage.getItem('donorName');
-            const savedDate = localStorage.getItem('certificateDate');
-            
+            const savedDate = localStorage.getItem('letterDate');
+
             if (savedName && savedDate) {
                 currentName = savedName;
                 currentDate = savedDate;
                 document.getElementById('displayName').textContent = savedName;
-                document.getElementById('certificateDate').textContent = savedDate;
+                document.getElementById('letterDate').textContent = savedDate;
                 document.getElementById('inputSection').classList.remove('active');
-                document.getElementById('certificateSection').classList.add('active');
+                document.getElementById('letterSection').classList.add('active');
             }
         };
 
-        function generateCertificate() {
+        function generateLetter() {
             const nameInput = document.getElementById('donorName');
             const name = nameInput.value.trim();
 
             if (!name) {
-                alert('请输入您的姓名');
+                alert('请输入您的昵称');
                 nameInput.focus();
                 return;
             }
 
             if (name.length < 2) {
-                alert('姓名至少需要2个字符');
+                alert('昵称至少需要2个字符');
                 nameInput.focus();
                 return;
             }
@@ -434,13 +354,13 @@
             currentDate = formatDate(new Date());
 
             localStorage.setItem('donorName', name);
-            localStorage.setItem('certificateDate', currentDate);
+            localStorage.setItem('letterDate', currentDate);
 
             document.getElementById('displayName').textContent = name;
-            document.getElementById('certificateDate').textContent = currentDate;
+            document.getElementById('letterDate').textContent = currentDate;
 
             document.getElementById('inputSection').classList.remove('active');
-            document.getElementById('certificateSection').classList.add('active');
+            document.getElementById('letterSection').classList.add('active');
         }
 
         function formatDate(date) {
@@ -450,30 +370,27 @@
             return `${year}年${month}月${day}日`;
         }
 
-        // 检测是否是微信环境
         function isWeChat() {
             const ua = navigator.userAgent.toLowerCase();
             return ua.indexOf('micromessenger') !== -1;
         }
 
-        function downloadCertificate() {
-            const certificate = document.getElementById('certificate');
-            
-            html2canvas(certificate, {
+        function downloadLetter() {
+            const letter = document.getElementById('letter');
+
+            html2canvas(letter, {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#FFFDE7',
                 logging: false
             }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                
+
                 if (isWeChat()) {
-                    // 微信环境：显示图片让用户长按保存
                     showSaveImageModal(imgData);
                 } else {
-                    // 非微信环境：直接下载
                     const link = document.createElement('a');
-                    link.download = `捐赠证书_${currentName}_${currentDate}.png`;
+                    link.download = `感谢信_${currentName}_${currentDate}.png`;
                     link.href = imgData;
                     link.click();
                 }
@@ -483,29 +400,28 @@
             });
         }
 
-        function shareCertificate() {
-            const certificate = document.getElementById('certificate');
-            
-            html2canvas(certificate, {
+        function shareLetter() {
+            const letter = document.getElementById('letter');
+
+            html2canvas(letter, {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: '#ffffff',
+                backgroundColor: '#FFFDE7',
                 logging: false
             }).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
-                
+
                 if (isWeChat()) {
-                    // 微信环境：显示图片提示长按分享
                     showSaveImageModal(imgData, true);
                 } else if (navigator.share) {
                     canvas.toBlob(blob => {
-                        const file = new File([blob], `捐赠证书_${currentName}.png`, {
+                        const file = new File([blob], `感谢信_${currentName}.png`, {
                             type: 'image/png'
                         });
-                        
+
                         navigator.share({
-                            title: '我的捐赠证书',
-                            text: `感谢${currentName}对公益事业的支持！`,
+                            title: '感谢信 - aigo 绿色充电站',
+                            text: '感谢您和 aigo 一起，为绿色生活充电，也为孩子们的午餐充电！',
                             files: [file]
                         }).catch(error => {
                             console.error('分享失败:', error);
@@ -513,7 +429,6 @@
                         });
                     });
                 } else {
-                    // 其他浏览器：直接显示图片保存
                     showSaveImageModal(imgData);
                 }
             }).catch(error => {
@@ -522,7 +437,6 @@
             });
         }
 
-        // 显示保存图片弹窗
         function showSaveImageModal(imgData, isShare = false) {
             const modal = document.createElement('div');
             modal.style.cssText = `
@@ -539,7 +453,7 @@
                 justify-content: center;
                 padding: 20px;
             `;
-            
+
             const img = document.createElement('img');
             img.src = imgData;
             img.style.cssText = `
@@ -547,18 +461,18 @@
                 max-height: 80vh;
                 margin-bottom: 20px;
             `;
-            
+
             const tip = document.createElement('div');
-            tip.innerHTML = isShare ? 
-                '<p style="color: white; text-align: center; font-size: 18px;">💡 长按图片保存到相册<br>然后去微信朋友圈分享</p>' :
-                '<p style="color: white; text-align: center; font-size: 18px;">💡 长按图片保存到相册</p>';
-            
+            tip.innerHTML = isShare ?
+                '<p style="color: white; text-align: center; font-size: 18px;">💚 长按图片保存到相册<br>分享您的爱心故事</p>' :
+                '<p style="color: white; text-align: center; font-size: 18px;">💚 长按图片保存到相册</p>';
+
             const closeBtn = document.createElement('button');
             closeBtn.textContent = '关闭';
             closeBtn.style.cssText = `
                 margin-top: 20px;
                 padding: 12px 40px;
-                background: #667eea;
+                background: #4CAF50;
                 color: white;
                 border: none;
                 border-radius: 25px;
@@ -566,7 +480,7 @@
                 cursor: pointer;
             `;
             closeBtn.onclick = () => document.body.removeChild(modal);
-            
+
             modal.appendChild(img);
             modal.appendChild(tip);
             modal.appendChild(closeBtn);
@@ -575,7 +489,7 @@
 
         document.getElementById('donorName').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                generateCertificate();
+                generateLetter();
             }
         });
     </script>
