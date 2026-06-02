@@ -321,7 +321,7 @@
             <button class="btn-generate" onclick="generateLetter()">查看感谢信</button>
         </div>
 
-        <div class="letter-section" id="letterSection" style="display: none;">
+        <div class="letter-section" id="letterSection">
             <div class="letter" id="letter">
                 <div class="letter-content">
                     <div class="certificate-title-en">CERTIFICATE</div>
@@ -346,6 +346,10 @@
                     </div>
                 </div>
             </div>
+            <div class="btn-group" style="margin-top: 30px;">
+                <button class="btn-download" onclick="downloadLetter()">📥 保存感谢信</button>
+                <button class="btn-share" onclick="shareLetter()">📤 分享爱心</button>
+            </div>
         </div>
         
         <div class="image-section" id="imageSection">
@@ -368,13 +372,21 @@
             const savedDate = localStorage.getItem('letterDate');
             const savedImgData = localStorage.getItem('letterImgData');
 
-            if (savedName && savedDate && savedImgData) {
+            if (savedName && savedDate) {
                 currentName = savedName;
                 currentDate = savedDate;
-                currentImgData = savedImgData;
-                document.getElementById('letterImage').src = savedImgData;
-                document.getElementById('inputSection').classList.remove('active');
-                document.getElementById('imageSection').style.display = 'block';
+                document.getElementById('displayName').textContent = savedName;
+                document.getElementById('letterDate').textContent = savedDate;
+
+                if (savedImgData) {
+                    currentImgData = savedImgData;
+                    document.getElementById('letterImage').src = savedImgData;
+                    document.getElementById('inputSection').classList.remove('active');
+                    document.getElementById('imageSection').style.display = 'block';
+                } else {
+                    document.getElementById('inputSection').classList.remove('active');
+                    document.getElementById('letterSection').classList.add('active');
+                }
             }
         };
 
@@ -400,31 +412,32 @@
             document.getElementById('displayName').textContent = name;
             document.getElementById('letterDate').textContent = currentDate;
 
-            const letter = document.getElementById('letter');
-            letter.style.display = 'block';
+            document.getElementById('inputSection').classList.remove('active');
+            document.getElementById('letterSection').classList.add('active');
 
-            html2canvas(letter, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#FFFDE7',
-                logging: false
-            }).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                currentImgData = imgData;
+            setTimeout(() => {
+                const letter = document.getElementById('letter');
+                html2canvas(letter, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: '#FFFDE7',
+                    logging: false
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    currentImgData = imgData;
 
-                localStorage.setItem('donorName', name);
-                localStorage.setItem('letterDate', currentDate);
-                localStorage.setItem('letterImgData', imgData);
+                    localStorage.setItem('donorName', name);
+                    localStorage.setItem('letterDate', currentDate);
+                    localStorage.setItem('letterImgData', imgData);
 
-                document.getElementById('letterImage').src = imgData;
-                document.getElementById('inputSection').classList.remove('active');
-                document.getElementById('imageSection').style.display = 'block';
-                letter.style.display = 'none';
-            }).catch(error => {
-                console.error('生成图片失败:', error);
-                alert('生成图片失败，请重试');
-                letter.style.display = 'none';
-            });
+                    document.getElementById('letterImage').src = imgData;
+                    document.getElementById('letterSection').classList.remove('active');
+                    document.getElementById('imageSection').style.display = 'block';
+                }).catch(error => {
+                    console.error('生成图片失败:', error);
+                    alert('生成图片失败，直接展示HTML版本');
+                });
+            }, 500);
         }
 
         function downloadLetterFromImage() {
