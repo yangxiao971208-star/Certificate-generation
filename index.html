@@ -24,7 +24,7 @@
 
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 600px;
         }
 
         .input-section {
@@ -123,71 +123,103 @@
                     #E0E0E0 32px
                 );
             pointer-events: none;
-            opacity: 0.3;
+            opacity: 0.2;
         }
 
         .letter-content {
             position: relative;
             z-index: 1;
-        }
-
-        .letter-header {
             text-align: center;
-            margin-bottom: 40px;
         }
 
-        .letter-title {
-            font-size: 36px;
-            color: #2E7D32;
-            font-family: 'Ma Shan Zheng', cursive;
+        .certificate-title-en {
+            font-size: 42px;
+            color: #333;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .certificate-title-cn {
+            font-size: 32px;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 20px;
             letter-spacing: 8px;
+        }
+
+        .divider-line {
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, #D32F2F, transparent);
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .divider-line::before,
+        .divider-line::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #D32F2F;
+            font-size: 16px;
+        }
+
+        .divider-line::before {
+            left: -25px;
+        }
+
+        .divider-line::after {
+            right: -25px;
+        }
+
+        .user-name {
+            font-size: 28px;
+            color: #333;
+            font-weight: 700;
+            margin: 20px 0;
+            padding: 10px 0;
+            border-bottom: 2px solid #333;
+            display: inline-block;
+            min-width: 200px;
         }
 
         .letter-body {
             font-size: 17px;
             line-height: 2.2;
             color: #333;
+            text-align: center;
+            margin: 25px 0;
         }
 
-        .greeting {
-            font-size: 20px;
-            margin-bottom: 25px;
-            font-weight: 600;
+        .letter-body p {
+            margin-bottom: 15px;
         }
 
-        .user-name {
-            color: #2E7D32;
-            font-size: 24px;
-            font-weight: 700;
-            font-family: 'Ma Shan Zheng', cursive;
-        }
-
-        .highlight {
-            color: #E65100;
-            font-weight: 600;
-        }
-
-        .donation-amount {
+        .partner-title {
+            font-size: 32px;
             color: #D32F2F;
-            font-size: 22px;
             font-weight: 700;
+            margin: 30px 0;
+            letter-spacing: 4px;
         }
 
         .letter-footer {
             margin-top: 40px;
-            text-align: right;
+            text-align: center;
         }
 
-        .brand-name {
-            color: #2E7D32;
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
+        .footer-text {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
         }
 
         .letter-date {
             font-size: 16px;
             color: #666;
+            margin-top: 20px;
         }
 
         .btn-group {
@@ -234,14 +266,26 @@
             color: white;
         }
 
-        @media (max-width: 550px) {
+        @media (max-width: 600px) {
             .letter {
                 padding: 35px 25px;
             }
 
-            .letter-title {
-                font-size: 28px;
+            .certificate-title-en {
+                font-size: 32px;
+            }
+
+            .certificate-title-cn {
+                font-size: 24px;
                 letter-spacing: 5px;
+            }
+
+            .user-name {
+                font-size: 24px;
+            }
+
+            .partner-title {
+                font-size: 24px;
             }
 
             .letter-body {
@@ -273,36 +317,24 @@
         <div class="letter-section" id="letterSection">
             <div class="letter" id="letter">
                 <div class="letter-content">
-                    <div class="letter-header">
-                        <div class="letter-title">【公益合伙人】</div>
-                    </div>
+                    <div class="certificate-title-en">CERTIFICATE</div>
+                    <div class="certificate-title-cn">公益合伙人</div>
+                    
+                    <div class="divider-line"></div>
+
+                    <div class="user-name" id="displayName"></div>
 
                     <div class="letter-body">
-                        <div class="greeting">
-                            嗨 <span class="user-name" id="displayName"></span>：
-                        </div>
-
-                        <p>今天，有个小朋友因为您，多吃了一顿饭。</p>
-
-                        <p>
-                            您选择 <span class="highlight">aigo 绿色充电站礼盒</span>的这份善意，
-                            让我们共同助力 <span class="highlight">中国社会福利基金会</span><br>
-                            免费午餐基金。
-                        </p>
-
-                        <p>
-                            不多，但足够让一个孩子<br>
-                            中午不再饿着肚子上课。
-                        </p>
-
-                        <p>
-                            感谢您和 <span class="highlight">aigo</span> 一起，<br>
-                            为绿色生活充电，也为孩子们的午餐充电。
-                        </p>
+                        <p>感谢您携手 aigo 参与“助力免费午餐”活动，</p>
+                        <p>一餐饭，暖饥寒午后；一份善，托成长盼望。</p>
+                        <p>以此为契，邀同路人并肩出发；聚微光，送饭香至山野。</p>
+                        <p>特邀您成为：</p>
                     </div>
 
+                    <div class="partner-title">免费午餐公益合伙人</div>
+
                     <div class="letter-footer">
-                        <div class="brand-name">aigo 绿色充电站</div>
+                        <div class="footer-text">特此感谢，铭致善意！</div>
                         <div class="letter-date" id="letterDate"></div>
                     </div>
                 </div>
